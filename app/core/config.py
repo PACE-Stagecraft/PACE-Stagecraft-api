@@ -15,7 +15,7 @@ class Settings(BaseSettings):
 
     AWS_REGION: str = "us-east-1"
     SQS_QUEUE_URL: str = "https://sqs.us-east-1.amazonaws.com/123456789/pipelineiq-webhooks"
-    BEDROCK_MODEL_ID: str = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+    BEDROCK_MODEL_ID: str = "amazon.nova-pro-v1:0"
 
     ENVIRONMENT: str = "development"
 

@@ -2,11 +2,14 @@ import asyncio
 from contextlib import asynccontextmanager
 from collections.abc import AsyncGenerator
 
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from redis.asyncio import Redis
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 from slowapi import _rate_limit_exceeded_handler
+from sqlalchemy import text
 
 from app.api.events import redis_event_listener
 from app.api.v1.router import api_router
@@ -78,3 +81,36 @@ app.include_router(ws_router)
 @app.get("/health", tags=["health"])
 async def health_check() -> dict:
     return {"status": "ok", "service": "api-service"}
+
+
+@app.get("/health/live", tags=["health"])
+async def liveness() -> dict:
+    """Process is up and serving requests. No dependency checks."""
+    return {"status": "ok"}
+
+
+@app.get("/health/ready", tags=["health"])
+async def readiness() -> JSONResponse:
+    """Pod is ready to receive traffic — verifies DB and Redis are reachable."""
+    checks: dict[str, str] = {}
+
+    try:
+        async with async_engine.connect() as conn:
+            await conn.execute(text("SELECT 1"))
+        checks["database"] = "ok"
+    except Exception as exc:
+        checks["database"] = f"error: {exc}"
+
+    try:
+        redis = await Redis.from_url(settings.REDIS_URL)
+        await redis.ping()
+        await redis.aclose()
+        checks["redis"] = "ok"
+    except Exception as exc:
+        checks["redis"] = f"error: {exc}"
+
+    healthy = all(v == "ok" for v in checks.values())
+    return JSONResponse(
+        status_code=status.HTTP_200_OK if healthy else status.HTTP_503_SERVICE_UNAVAILABLE,
+        content={"status": "ok" if healthy else "unhealthy", "checks": checks},
+    )
