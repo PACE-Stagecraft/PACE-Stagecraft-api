@@ -1,4 +1,4 @@
-import logging
+﻿import logging
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import RedirectResponse
@@ -20,7 +20,7 @@ router = APIRouter()
 _publisher = SQSPublisher()
 
 # Slug must match the GitHub App name (lowercased, hyphens)
-GITHUB_APP_INSTALL_URL = "https://github.com/apps/agora-ops/installations/new"
+GITHUB_APP_INSTALL_URL = "https://github.com/apps/stagecraft-ops/installations/new"
 
 
 @router.get("/", response_model=OrganizationList)

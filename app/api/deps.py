@@ -1,4 +1,4 @@
-"""Shared FastAPI dependencies for the v1 API.
+﻿"""Shared FastAPI dependencies for the v1 API.
 
 Centralizes JWT-cookie authentication so every route resolves the current user
 the same way (previously each route re-implemented this and read a cookie whose
@@ -13,7 +13,7 @@ from app.core.security import verify_access_token
 from app.db.base import get_db
 from app.models.user import User
 
-AUTH_COOKIE_NAME = "agora_token"
+AUTH_COOKIE_NAME = "stagecraft_token"
 
 async def get_current_user(
     db: AsyncSession = Depends(get_db),

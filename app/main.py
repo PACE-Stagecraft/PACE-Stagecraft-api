@@ -1,4 +1,4 @@
-import asyncio
+﻿import asyncio
 import logging
 from contextlib import asynccontextmanager
 from collections.abc import AsyncGenerator
@@ -44,7 +44,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
     Schema is NOT created here outside local development. In staging/
     production, schema changes happen exactly once via the Alembic
-    `alembic upgrade head` Helm pre-upgrade hook job (see agora-helm's
+    `alembic upgrade head` Helm pre-upgrade hook job (see stagecraft-helm's
     templates/migration-job.yaml), which runs to completion before the new
     Deployment is rolled out. Running create_all() on every pod start would
     race across replicas and bypass migration history entirely.
