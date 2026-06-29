@@ -29,6 +29,6 @@ to avoid exposing the API's internal schema publicly — see `Settings.is_produc
 | [stagecraft-webhook](https://github.com/Stagecraft-Ops/stagecraft-webhook) | GitHub webhook receiver → SQS |
 | [stagecraft-worker](https://github.com/Stagecraft-Ops/stagecraft-worker) | Celery worker — AI analysis via Bedrock |
 | [stagecraft-frontend](https://github.com/Stagecraft-Ops/stagecraft-frontend) | Next.js 14 dashboard |
-| [stagecraft-workflows](https://github.com/Stagecraft-Ops/stagecraft-workflows) | Reusable GitHub Actions |
+| [stagecraft-workflows](https://github.com/PACE-Stagecraft/PACE-Stagecraft-workflows) | Reusable GitHub Actions |
 | [stagecraft-helm](https://github.com/Stagecraft-Ops/stagecraft-helm) | Helm charts for EKS |
 | [stagecraft-infra](https://github.com/Stagecraft-Ops/stagecraft-infra) | Terraform — AWS infrastructure |
